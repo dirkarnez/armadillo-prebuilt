@@ -20,21 +20,23 @@ jobs:
         shell: cmd
         run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ env.libraryName }}" -B./build
         
+        # Workaround here. It seems armadillo's CMakeLists.txt ignore 'INSTALL' project file extension. CMake in GitHub Action failed to run `cmake --install`
       - name: cmake build
         shell: cmd
-        run: cd armadillo-code\build && cmake --build . --target INSTALL --config Debug -- /nologo /verbosity:minimal /maxcpucount
+        run: cd armadillo-code\build && cmake --build . --target INSTALL --config Debug -- /nologo /verbosity:minimal /maxcpucount 
         
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "armadillo-code/build/${{ env.libraryName }}"
+          path: ${{ env.libraryName }}
+          directory: "armadillo-code/build"
           filename: "${{ env.msvcTargetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "${{ env.msvcTargetZip }}"
+          artifacts: "armadillo-code/build/${{ env.msvcTargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
