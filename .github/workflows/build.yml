@@ -23,6 +23,10 @@ jobs:
       - name: cmake build
         shell: cmd
         run: cd armadillo-code\build && cmake --build . --target ALL_BUILD --config Debug -- /nologo /verbosity:minimal /maxcpucount
+
+      - name: cmake build
+        shell: cmd
+        run: cd armadillo-code\build && ls
         
       - name: Archive Release
         uses: thedoctor0/zip-release@master
