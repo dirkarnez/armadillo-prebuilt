@@ -18,11 +18,11 @@ jobs:
 
       - name: cmake build
         shell: cmd
-        run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ env.libraryName }}" -B./build
+        run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -B./build
         
       - name: cmake install
         shell: cmd
-        run: cd armadillo-code && cmake --install build --verbose
+        run: cd armadillo-code\build && cmake --install . --prefix "${{ env.libraryName }}" --verbose
         
       - name: Archive Release
         uses: thedoctor0/zip-release@master
