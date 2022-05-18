@@ -29,14 +29,13 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          path: ${{ env.libraryName }}
-          directory: "armadillo-code/build"
+          directory: "armadillo-code/build/${{ env.libraryName }}"
           filename: "${{ env.msvcTargetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "armadillo-code/build/${{ env.msvcTargetZip }}"
+          artifacts: "armadillo-code/build/${{ env.libraryName }}/${{ env.msvcTargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
 
