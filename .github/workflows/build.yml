@@ -22,7 +22,7 @@ jobs:
         
       - name: cmake build
         shell: cmd
-        run: cd armadillo-code\build && cmake --build . --target ALL_BUILD --config Debug -- /nologo /verbosity:minimal /maxcpucount
+        run: cd armadillo-code\build && cmake --build . --target INSTALL --config Debug -- /nologo /verbosity:minimal /maxcpucount
 
       - name: cmake build
         shell: cmd
