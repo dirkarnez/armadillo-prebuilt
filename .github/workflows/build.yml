@@ -22,7 +22,7 @@ jobs:
         
       - name: cmake install
         shell: cmd
-        run: cd armadillo-code && cmake --install .
+        run: cd armadillo-code && cmake --install build --verbose
         
       - name: Archive Release
         uses: thedoctor0/zip-release@master
