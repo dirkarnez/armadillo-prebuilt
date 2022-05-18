@@ -11,15 +11,19 @@ jobs:
     runs-on: windows-2019
     env:
       libraryName: armadillo
-      msvcTargetZip: armadillo-${{ github.ref_name }}-mingw.zip
+      msvcTargetZip: armadillo-${{ github.ref_name }}-msvc2019.zip
     steps:
       - name: git clone
         run: git clone --branch 11.1.x https://gitlab.com/conradsnicta/armadillo-code.git
 
       - name: cmake build
         shell: cmd
-        run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ env.libraryName }}" -B./build && cd build && cmake --install .
-      
+        run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ env.libraryName }}" -B./build
+        
+      - name: cmake install
+        shell: cmd
+        run: cd armadillo-code\build && cmake --install .
+        
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
