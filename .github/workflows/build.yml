@@ -22,7 +22,7 @@ jobs:
         
       - name: cmake install
         shell: cmd
-        run: ls   # cd armadillo-code && cmake --install . --prefix "build${{ env.libraryName }}" --verbose
+        run: cd armadillo-code && cd build && ls   # cd armadillo-code && cmake --install . --prefix "build${{ env.libraryName }}" --verbose
         
 #       - name: Archive Release
 #         uses: thedoctor0/zip-release@master
