@@ -18,7 +18,7 @@ jobs:
 
       - name: cmake
         shell: cmd
-        run: cd armadillo-code && cmake.exe -G "MinGW Makefiles" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ env.libraryName }}" -B./build
+        run: cd armadillo-code && cmake.exe -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ env.libraryName }}" -B./build
         
       - name: cmake install
         shell: cmd
