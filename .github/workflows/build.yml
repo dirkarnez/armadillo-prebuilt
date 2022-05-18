@@ -1,0 +1,38 @@
+name: cpp-prebuilt-release-actions-workflow
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: windows-latest
+    env:
+      libraryName: armadillo
+      msvcTargetZip: ${{ libraryName }}-${{ github.ref_name }}-mingw.zip
+    steps:
+      - name: git clone
+        run: git clone --branch 11.1.x https://gitlab.com/conradsnicta/armadillo-code.git
+
+      - name: cmake build
+        shell: cmd
+        run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ libraryName }}" -B./build && cd build && cmake --install .
+      
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          path: "armadillo-code/build/${{ libraryName }}"
+          filename: "${{ env.msvcTargetZip }}"
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ env.msvcTargetZip }}"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+          
+          
