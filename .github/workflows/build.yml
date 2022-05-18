@@ -4,15 +4,14 @@ on:
     # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-env:
-  libraryName: armadillo
   
 jobs:
   build:
     name: Create Release
     runs-on: windows-latest
     env:
-      msvcTargetZip: ${{ env.libraryName }}-${{ github.ref_name }}-mingw.zip
+      libraryName: armadillo
+      msvcTargetZip: armadillo-${{ github.ref_name }}-mingw.zip
     steps:
       - name: git clone
         run: git clone --branch 11.1.x https://gitlab.com/conradsnicta/armadillo-code.git
