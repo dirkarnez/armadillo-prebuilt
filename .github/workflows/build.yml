@@ -16,27 +16,27 @@ jobs:
       - name: git clone
         run: git clone --branch 11.1.x https://gitlab.com/conradsnicta/armadillo-code.git
 
+      - name: cmake
+        shell: cmd
+        run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="build/${{ env.libraryName }}" -B./build
+        
       - name: cmake build
         shell: cmd
-        run: cd armadillo-code && cmake.exe -G "Visual Studio 16 2019" -A x64 -DBUILD_SHARED_LIBS=OFF -B./build
+        run: cd armadillo-code\build && cmake --build . --target ALL_BUILD --config Debug -- /nologo /verbosity:minimal /maxcpucount
         
-      - name: cmake install
-        shell: cmd
-        run: cd armadillo-code && cd build && ls   # cd armadillo-code && cmake --install . --prefix "build${{ env.libraryName }}" --verbose
-        
-#       - name: Archive Release
-#         uses: thedoctor0/zip-release@master
-#         with:
-#           type: 'zip'
-#           path: "armadillo-code/build/${{ env.libraryName }}"
-#           filename: "${{ env.msvcTargetZip }}"
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          path: "armadillo-code/build/${{ env.libraryName }}"
+          filename: "${{ env.msvcTargetZip }}"
           
-#       - name: Release prebuilt
-#         uses: ncipollo/release-action@v1
-#         with:
-#           artifacts: "${{ env.msvcTargetZip }}"
-#           allowUpdates: true
-#           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ env.msvcTargetZip }}"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
           
           
