@@ -56,6 +56,13 @@ jobs:
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
             cd cmake-build && cmake --build . && cmake --install . 
             
+      - shell: cmd
+        run: |
+          cd /d "armadillo-code\cmake-build\${{ env.cmakeInstallationPath }}\share\Armadillo\CMake" &&^
+          ${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe -i
+          's/D:\/a\/armadillo-prebuilt\/armadillo-prebuilt\/armadillo-code\/cmake-build\/armadillo-installation\//${CMAKE_CURRENT_LIST_DIR}\/..\/..\/..\//g' ArmadilloConfig.cmake &&^
+          type ArmadilloConfig.cmake
+          
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
